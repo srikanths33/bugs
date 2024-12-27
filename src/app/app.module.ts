@@ -6,10 +6,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
   
 import { PostModule } from './post/post.module';
+import { DashComponent } from './dash/dash.component';
+import { CamelcasePipe } from './post/pipe/camelcase.pipe';
   
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DashComponent,
   ],
   imports: [
     BrowserModule,

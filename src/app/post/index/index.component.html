@@ -1,7 +1,12 @@
 <div class="container">
-    <h1>Notice board</h1>
+    <nav class="nav">
+      <h1>Notice board</h1>
+      <h1>{{greeting}}</h1>
+      <h1>timer{{formatTime()}}</h1>
+
+    </nav>
     
-    <a href="#" routerLink="/post/create/" class="btn btn-success">Create NEW Post</a>
+    <a href="#" routerLink="/post/create/" class="btn btn-success">{{'Create NEW Post'|camelcase}}</a>
       
     <table class="table table-striped">
         <thead>
@@ -13,14 +18,14 @@
               </tr>
         </thead>
         <tbody>
-              <tr *ngFor="let post of posts">
-                <td>{{ post.id }}</td>
+              <tr *ngFor="let post of posts" id="table">
+                <td>{{ post.id  | id}}</td>
                 <td>{{ post.title | uppercase }}</td>
                 <td>{{ post.body }}</td>
                 <td>
-                  <a href="#" [routerLink]="['/post/', post.id, 'view']" style="margin-right:5px" class="btn btn-info">VieW</a>
-                  <a href="#" [routerLink]="['/post/', post.id, 'edit']" class="btn btn-primary" style="margin-right:5px">EdIt</a>
-                  <button type="button" (click)="deletePost(post.id)" class="btn btn-danger">DELETE</button>
+                  <a href="#" [routerLink]="['/post/', post.id, 'view']" style="margin-right:5px" class="btn btn-info" >{{'VieW' |camelcase}}</a>
+                  <a href="#" [routerLink]="['/post/', post.id, 'edit']" class="btn btn-primary" style="margin-right:5px">{{'EdIt' |camelcase}}</a>
+                  <button type="button" (click)="deletePost(post.id)" class="btn btn-danger">{{'DELETE' | camelcase}}</button>
                 </td>
               </tr>
         </tbody>

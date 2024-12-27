@@ -1,0 +1,16 @@
+.nav{
+    background-color: black;
+    width: 100%;
+    color: white;
+    position: sticky;
+    top: 0;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+#table{
+    cursor: pointer;
+}
+#table:hover{
+    border: 1px;
+    box-shadow: 0 2px 2px  black;
+}

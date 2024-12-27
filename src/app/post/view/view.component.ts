@@ -12,6 +12,8 @@ export class ViewComponent implements OnInit {
      
   id!: number;
   post!: Post;
+
+
     
   /*------------------------------------------
   --------------------------------------------
@@ -32,7 +34,9 @@ export class ViewComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.params['postId'];
         
-    this.postService.find(this.id).subscribe((data: Post)=>{
+    this.postService.find(this.id).subscribe(
+      (data: Post)=>{
+      this.post=data;
     });
   }
     

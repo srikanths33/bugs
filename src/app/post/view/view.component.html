@@ -1,21 +1,21 @@
 <div class="container">
     <h1>View Post</h1>
   
-    <a class="btn btn-primary">Back</a>
+    <a class="btn btn-primary" routerLink="/post">Back</a>
    
     <div>
         <strong>ID:</strong>
-        <p></p>
+        <p>{{id |id}}</p>
     </div>
    
     <div>
         <strong>Title:</strong>
-        <p></p>
+        <p>{{post.title}}</p>
     </div>
    
     <div>
         <strong>Body:</strong>
-        <p></p>
+        <p>{{post.body}}</p>
     </div>
    
 </div>

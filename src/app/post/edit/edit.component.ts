@@ -14,6 +14,8 @@ export class EditComponent implements OnInit {
   id!: number;
   post!: Post;
   form!: FormGroup;
+  isSubmitted = false;
+  
     
   /*------------------------------------------
   --------------------------------------------
@@ -32,15 +34,18 @@ export class EditComponent implements OnInit {
    * @return response()
    */
   ngOnInit(): void {
+    
     this.id = this.route.snapshot.params['postId'];
     this.postService.find(this.id).subscribe((data: Post)=>{
-      this.post = data;
+      this.form.patchValue(data);
+      // this.post = data;
     }); 
-      
     this.form = new FormGroup({
       title: new FormControl('', [Validators.required]),
       body: new FormControl('', Validators.required)
     });
+      
+   
   }
     
   /**
@@ -57,12 +62,31 @@ export class EditComponent implements OnInit {
    *
    * @return response()
    */
-  submit(){
-    console.log(this.form.value);
-    this.postService.update(this.id, this.form.value).subscribe((res:any) => {
-         console.log('Post updated successfully!');
-         this.router.navigateByUrl('post/index');
-    })
+  canDeactivate(): boolean {
+    if (this.form && !this.isSubmitted) {
+      return window.confirm('You have unsaved changes. Are you sure you want to leave?');
+    }
+    return true;
+  }
+  // submit(){
+  //   console.log(this.form.value);
+  //   this.postService.update(this.id, this.form.value).subscribe((res:any) => {
+  //        console.log('Post updated successfully!');
+  //        this.router.navigateByUrl('post/index');
+  //   })
+  // }
+  submit(): void {
+    // First, check if the form is valid before submitting
+    if (this.form.valid) {
+      this.postService.update(this.id, this.form.value).subscribe((res: any) => {
+        // console.log('Post updated successfully!');
+        this.isSubmitted = true;
+        alert('Post updated successfully!');
+         this.router.navigateByUrl('post/index'); // Redirect after submission
+      });
+    } else {
+      console.log('Form is invalid.');
+    }
   }
    
 }

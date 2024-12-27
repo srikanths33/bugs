@@ -10,8 +10,10 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 })
 export class CreateComponent implements OnInit {
     
-  form!: FormGroup;
-    
+  form!: FormGroup;  
+  isSubmitted = false;
+
+  
   /*------------------------------------------
   --------------------------------------------
   Created constructor
@@ -48,12 +50,32 @@ export class CreateComponent implements OnInit {
    *
    * @return response()
    */
-  submit(){
-    console.log(this.form.value);
-    this.postService.create(this.form.value).subscribe((res:any) => {
-         console.log('Post created successfully!');
-         this.router.navigateByUrl('post/index');
-    })
+  // submit(){
+  //   console.log(this.form.value);
+  //   this.postService.create(this.form.value).subscribe((res:any) => {
+  //        console.log('Post created successfully!');
+  //        this.router.navigateByUrl('post/index');
+  //   })}
+  canDeactivate(): boolean {
+    if (this.form  && !this.isSubmitted){
+      return window.confirm('You have unsaved changes. Are you sure you want to leave?');
+    }
+    return true;
+  }
+
+  submit(): void {
+    // First, check if the form is valid before submitting
+    if (this.form.valid) {
+      this.postService.create(this.form.value).subscribe((res: any) => {
+        this.isSubmitted = true;
+        // console.log('Post created successfully!');
+        alert('Post created successfully!')
+        this.router.navigateByUrl('post'); // Redirect after submission
+      });
+    } else {
+      
+      console.log('Form is invalid.');
+    }
+  }
   }
   
-}
