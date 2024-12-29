@@ -32,4 +32,14 @@
   
         <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Submit</button>
     </form>
+       <!-- Custom confirmation dialog -->
+<div class="overlay" *ngIf="isDialogVisible">
+    <div class="dialog-box">
+      <p>You have unsaved changes. Are you sure you want to leave?</p>
+      <div class="dialog-buttons">
+        <button class="cancel-btn" (click)="Confirm()" >yes</button>
+        <button class="confirm-btn" (click)="onCancel()">no</button>
+      </div>
+    </div>
+  </div>
 </div>

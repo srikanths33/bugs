@@ -15,6 +15,10 @@ export class EditComponent implements OnInit {
   post!: Post;
   form!: FormGroup;
   isSubmitted = false;
+  isconfirmed:boolean=false;
+
+  // Flag to control the visibility of the custom confirmation modal
+  isDialogVisible: boolean = false;
   
     
   /*------------------------------------------
@@ -34,7 +38,6 @@ export class EditComponent implements OnInit {
    * @return response()
    */
   ngOnInit(): void {
-    
     this.id = this.route.snapshot.params['postId'];
     this.postService.find(this.id).subscribe((data: Post)=>{
       this.form.patchValue(data);
@@ -62,11 +65,28 @@ export class EditComponent implements OnInit {
    *
    * @return response()
    */
+
+   // Triggered when the user confirms to leave the page
+   Confirm(): void {
+    this.isconfirmed=true;
+    this.isDialogVisible = false;
+  
+    this.router.navigateByUrl('post/index');// Proceed with navigation
+  }
+
+  // Triggered when the user cancels the action
+  onCancel(): void {
+    this.isDialogVisible = false; // Close the modal if canceled
+  }
   canDeactivate(): boolean {
-    if (this.form && !this.isSubmitted) {
-      return window.confirm('You have unsaved changes. Are you sure you want to leave?');
+    if (this.form && !this.isSubmitted && !this.isconfirmed) {
+      this.isDialogVisible = true; // Show the custom modal
+      return false; // Prevent navigation until user confirms
     }
     return true;
+    //   return window.confirm('You have unsaved changes. Are you sure you want to leave?');
+    // }
+    // return true;
   }
   // submit(){
   //   console.log(this.form.value);

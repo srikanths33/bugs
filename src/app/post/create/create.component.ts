@@ -12,6 +12,8 @@ export class CreateComponent implements OnInit {
     
   form!: FormGroup;  
   isSubmitted = false;
+  isConfirmed: boolean = false
+  isDialogVisible:boolean=false;
 
   
   /*------------------------------------------
@@ -56,9 +58,21 @@ export class CreateComponent implements OnInit {
   //        console.log('Post created successfully!');
   //        this.router.navigateByUrl('post/index');
   //   })}
+  Confirm(): void {
+    this.isConfirmed = true;
+    this.isDialogVisible =false;  // Hide the modal
+    this.router.navigateByUrl('post/index');  // Navigate to the desired page
+  }
+
+  // Triggered when the user cancels the action
+  onCancel(): void {
+    this.isDialogVisible = false;  // Close the modal if canceled
+  }
   canDeactivate(): boolean {
-    if (this.form  && !this.isSubmitted){
-      return window.confirm('You have unsaved changes. Are you sure you want to leave?');
+    if (this.form  && !this.isSubmitted && !this.isConfirmed){
+      // return window.confirm('You have unsaved changes. Are you sure you want to leave?');
+      this.isDialogVisible = true;  // Show the confirmation modal
+      return false; 
     }
     return true;
   }
